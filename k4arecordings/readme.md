@@ -1,34 +1,36 @@
 # Sample recordings from k4a demo.
 
-Recordings are stored in two formats:
-* binary with extension filename.rec.bin
-* ascii with extension .rec
+Currently we sample k4a body poses in realtime and store only skeletal data provided by the Body SDK. Point cloud data at the moment is not exported.
+
+Animation frames are stored (for convenience) in two formats:
+* condensed binary format, with extension filename.rec.bin
+* pure text CSV (ascii) with extension .rec
 
 If you are processing these samples in Matlab and python, please use the ASCII (.rec) format, it's much easier to parse. 
 
-## Understanding the ASCII export structure
+## Understanding the structure of the ASCII format
 
-ASCII (.rec) is a simple CSV file, where each line represents one frame of the body animation sequence.
+ASCII (.rec) is actually a simple CSV file, where each line represents one frame of the skeletal animation sequence.
 
-Frame consists of the following columns, separated by ',' character, and terminated by end of line.
-Description of columns follows:
+All columns in the CSV are separated by ',' character, and terminated by the end of line.
 
-* frame #0
-  * frame time expressed in microseconds (since the start of the epoche)
-  * sequence of 32 joints in a single row, where each joint is represented as:
-    * joint 0 confidence (0 = none, 1 = shady, 2 = ok)
-    * joint 0 position expressed as decimal triplet: x, y, z
-    * joint 0 orientation as quaternion quadruplet: x, y, z, w
-    * joint 1 confidence (0 = none, 1 = shady, 2 = ok)
-    * joint 1 position expressed as decimal triplet: x, y, z
-    * joint 1 orientation as quaternion quadruplet: x, y, z, w
-    * ...
-    * joint 31 confidence (0 = none, 1 = shady, 2 = ok)
-    * joint 31 position expressed as decimal triplet: x, y, z
-    * joint 31 orientation as quaternion quadruplet: x, y, z, w
-  * end of line marks end of frame
-* frame #1
-  * ... and so on
+Each line contains time of recording, and 32 joints with their positions (3d) and orienation (quaternion).
+
+More specifically, columns in order of appearance are:
+
+ * frame time of recording, expressed in microseconds (since the start of the epoch)
+ * sequence of 32 joints in a single row, where each joint is represented as:
+   * joint 0 confidence (0 = none, 1 = shady, 2 = ok)
+   * joint 0 position expressed as decimal triplet: x, y, z
+   * joint 0 orientation as quaternion quadruplet: x, y, z, w
+   * joint 1 confidence (0 = none, 1 = shady, 2 = ok)
+   * joint 1 position expressed as decimal triplet: x, y, z
+   * joint 1 orientation as quaternion quadruplet: x, y, z, w
+   * ...
+   * joint 31 confidence (0 = none, 1 = shady, 2 = ok)
+   * joint 31 position expressed as decimal triplet: x, y, z
+   * joint 31 orientation as quaternion quadruplet: x, y, z, w
+ * end of line marks end of frame
   
   
   Example line from .rec file:
